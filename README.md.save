@@ -1,0 +1,5 @@
+# Direct GPS
+
+This simple Python script reads the NMEA data from GPS receiver connected to Raspberry Pi via USB and sends the data into CAN-Bus network.
+
+Note:This is  
