@@ -49,7 +49,7 @@ while True:
 #    print("raw:", data) #prints raw data
 #    print(data[0:6])
 
-    if data[0:6] == b'$GPRMC':
+    if data[0:6] == b'$GPRMC' or data[0:6] == b'$GNRMC':
         sdata = data.decode().split(",")
         if sdata[2] == 'V':
             print("no satellite data available")
@@ -65,9 +65,13 @@ while True:
         GPS_data = bytearray([int(lat) & 0xFF, int(lat)>>8 & 0xFF, int(lat)>>16 & 0xFF, int(lat)>>24 & 0xFF, int(lon) & 0xFF,  int(lon)>>8 & 0xFF, int(lon)>>16 & 0xFF, int(lon)>>24 & 0xFF])
         msg = can.Message(arbitration_id=99, data=GPS_data, extended_id=False)
         Msg_Ready = True
- #       print("Lat : %s, Lon : %s, Speed: %s, trCourse: %s" %  (lat, lon, speed, trCourse))
+#       print("Lat : %s, Lon : %s, Speed: %s, trCourse: %s" %  (lat, lon, speed, trCourse))
 
-    if data[0:6] == b'$GPGGA':
+# Pure GPS message - GPGGA
+# Some  GPS units  use conmination of  GPS and GLONAS sat's
+# These units transmit GNGGA message by default
+
+    if data[0:6] == b'$GPGGA' or data[0:6] == b'$GNGGA':
         sdata = data.decode().split(",")
         if sdata[2] == 'V':
             print("no satellite data available")
@@ -79,7 +83,7 @@ while True:
 
 #        print("Satellites : %s, Altitude : %s(%s)" %  (sats,alt,alt_units))
 
-    if data[0:6] == b'$GPVTG':
+    if data[0:6] == b'$GPVTG' or data[0:6] == b'$GNVTG':
         sdata = data.decode().split(",")
         if sdata[2] == 'V':
             print("no satellite data available")
