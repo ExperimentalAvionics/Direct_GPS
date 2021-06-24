@@ -65,7 +65,7 @@ while True:
         GPS_data = bytearray([int(lat) & 0xFF, int(lat)>>8 & 0xFF, int(lat)>>16 & 0xFF, int(lat)>>24 & 0xFF, int(lon) & 0xFF,  int(lon)>>8 & 0xFF, int(lon)>>16 & 0xFF, int(lon)>>24 & 0xFF])
         msg = can.Message(arbitration_id=99, data=GPS_data, extended_id=False)
         Msg_Ready = True
-#       print("Lat : %s, Lon : %s, Speed: %s, trCourse: %s" %  (lat, lon, speed, trCourse))
+#        print("GPRMC/$GNRMC = Lat : %s, Lon : %s, Speed: %s" %  (lat, lon, speed))
 
 # Pure GPS message - GPGGA
 # Some  GPS units  use conmination of  GPS and GLONAS sat's
@@ -104,14 +104,16 @@ while True:
         speed = sdata[5]
 
         if speed == "":
-            speed = "32768"
+            speed = "327.68"
         if alt == "":
             alt = "15000"
+
+        speed = float(speed)*100
 
         GPS_data = bytearray([int(float(speed)) & 0xFF, int(float(speed))>>8, int(float(alt)*conv_m2ft) & 0xFF, int(float(alt)*conv_m2ft)>>8, int(float(tracking_true)) & 0xFF, int(float(tracking_true))>>8, int(float(tracking_mag)) & 0xFF, int(float(tracking_mag))>>8])
         msg = can.Message(arbitration_id=100, data=GPS_data, extended_id=False)
         Msg_Ready = True
-#        print("Speed: %s, Alt : %s, tracking_true: %s, tracking_mag: %s" %  (speed, alt, tracking_true, tracking_mag))
+ #       print("GPVTG/GNVTG Speed: %s, Alt : %s, tracking_true: %s, tracking_mag: %s" %  (speed, alt, tracking_true, tracking_mag))
     if  Msg_Ready:
         try:
             bus.send(msg)

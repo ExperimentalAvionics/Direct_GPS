@@ -21,4 +21,7 @@ Ground Speed, Altitude, Track True, Track Magnetic - 2 bytes each
 
 See this page for full CAN message map: http://experimentalavionics.com/can-bus/
 
+## Release Notes: ##
 
+### 2021-06-24 ###
+* Ground speed reported to the CAN bus as Knots * 100
