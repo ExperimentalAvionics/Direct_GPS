@@ -98,8 +98,8 @@ while True:
             tracking_mag  = "32768"
 
 # Since our GPS receiver does not have the lookup table for declination, we use the geomag library
-        if int(tracking_true) >=0 and int(tracking_true)<=360:
-            tracking_mag = tracking_true + geomag.declination(lat/1000000, lon/1000000)
+        if int(float(tracking_true)) >=0 and int(float(tracking_true))<=360:
+            tracking_mag = tracking_true + geomag.declination(float(lat)/1000000, float(lon)/1000000)
 
         speed = sdata[5]
 
@@ -121,6 +121,3 @@ while True:
         except can.CanError:
             print("Message NOT sent")
     Msg_Ready = False
-
-
-
