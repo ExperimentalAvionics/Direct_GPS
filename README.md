@@ -23,6 +23,17 @@ See this page for full CAN message map: http://experimentalavionics.com/can-bus/
 
 ## Release Notes: ##
 
+### 2023-12-22 ###
+The script sends satellite signal information into the CAN bus separately for each of the two constellations GPS (USA) and GLONASS (Russia). 
+
+The messages have arbitration ID 101 and 102 respectively.
+
+The structure of the messages:
+
+The first byte is the number of satellites received by the GPS unit
+Other 7 bytes in the CAN message represent satellites signal level from 0 to 14 presented as 4 bit words (one bytes carries information for two satellites)
+New version of the Display software uses this information to show the satellites signal levels on the screen.
+
 ### 2021-12-14 ###
 * Bug fixes in magnetic tracking calculations
 * Added satellite signal level CAN messages. Message ID 101 - for GPS and 102 for GLONASS. First byte in the message represents the number of visible satellites. The othe 7 bytes keep the information about signal level in 4 bit words (14 satellites max)
